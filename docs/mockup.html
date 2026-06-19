@@ -1,0 +1,181 @@
+<title>Sanas Mobile — Live Call mockup</title>
+<style>
+  :root{
+    --bg:#ffffff;--surface:#ffffff;--field:#f7f7f7;--text:#0a0a0a;--soft:#767676;
+    --border:#e3e3e3;--green:#44eca0;--greenDeep:#16c47f;--ink:#0a0a0a;--onBrand:#fff;
+  }
+  [data-theme="dark"]{
+    --bg:#0f1217;--surface:#1a1e25;--field:#232831;--text:#e9ebef;--soft:#aab1bd;
+    --border:#313742;--ink:#262b33;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Helvetica Neue",Helvetica,Arial,"Segoe UI",sans-serif}
+  .wrap{min-height:100%;background:#0b0d12;color:#e9ebef;padding:28px 16px 48px;
+    display:flex;flex-direction:column;align-items:center;gap:20px}
+  .head{max-width:760px;text-align:center}
+  .head h1{font-size:22px;font-weight:800;letter-spacing:-.01em}
+  .head p{color:#9aa1ad;font-size:14px;margin-top:6px;line-height:1.5}
+  .pill-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:4px}
+  .ctl{font:inherit;font-size:12.5px;font-weight:700;border:1px solid #2c323c;background:#161a20;
+    color:#cfd4dc;border-radius:999px;padding:7px 13px;cursor:pointer}
+  .ctl.on{background:linear-gradient(90deg,var(--green),var(--greenDeep));color:#04140d;border-color:transparent}
+  .stage{display:flex;gap:26px;flex-wrap:wrap;justify-content:center}
+
+  /* phone */
+  .phone{width:300px;height:620px;border-radius:46px;background:#000;padding:11px;
+    box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 2px #2a2f37;position:relative}
+  .screen{width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--bg);
+    display:flex;flex-direction:column;color:var(--text)}
+  .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:120px;height:26px;
+    background:#000;border-radius:0 0 16px 16px;z-index:5}
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px 4px;
+    font-size:12px;font-weight:600;color:var(--text)}
+  .cap{font-size:11px;color:#9aa1ad;margin-top:2px}
+
+  /* app header */
+  .ahead{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 18px 14px;border-bottom:1px solid var(--border)}
+  .brand{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:700}
+  .dot{width:11px;height:11px;border-radius:50%;background:var(--greenDeep)}
+  .tbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface);
+    display:grid;place-items:center;color:var(--text);font-size:15px;cursor:pointer}
+
+  .app{padding:16px 18px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .lbl{color:var(--soft);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;margin-top:6px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{border:1px solid var(--border);background:var(--field);color:var(--text);
+    border-radius:999px;padding:7px 11px;font-size:12px;font-weight:600}
+  .chip.sel{border-color:var(--greenDeep);background:rgba(22,196,127,.12);color:var(--greenDeep)}
+  .callrow{display:flex;align-items:center;gap:9px;margin-top:6px}
+  .callbtn{background:var(--ink);color:var(--onBrand);border:none;border-radius:12px;
+    padding:13px 0;width:104px;text-align:center;font-size:15px;font-weight:700}
+  .callbtn.green{background:var(--greenDeep)}
+  .hang{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:12px;
+    padding:13px 16px;font-size:15px;font-weight:700}
+  .timer{margin-left:auto;font-size:21px;font-weight:800;color:var(--soft);font-variant-numeric:tabular-nums}
+  .timer.on{color:var(--greenDeep)}
+  .dim{opacity:.45}
+  .togrow{display:flex;gap:9px}
+  .tog{flex:1;background:var(--field);border:1px solid var(--border);color:var(--soft);
+    border-radius:999px;padding:11px 0;text-align:center;font-size:13px;font-weight:700}
+  .tog.green{background:var(--greenDeep);border-color:var(--greenDeep);color:#fff}
+  .tog.darkon{background:var(--ink);border-color:var(--ink);color:#fff}
+  .status{color:var(--text);font-size:12.5px;line-height:1.5;margin-top:12px}
+  .foot{color:var(--soft);font-size:11px;line-height:1.5;margin-top:auto;padding-top:10px}
+  .spin{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.4);
+    border-top-color:#fff;display:inline-block;animation:sp 1s linear infinite;vertical-align:-3px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .label-state{font-size:11px;color:#9aa1ad;text-align:center;margin-top:8px}
+</style>
+
+<div class="wrap" id="root">
+  <div class="head">
+    <h1>Sanas Mobile — Live Call</h1>
+    <p>Mockup of the proposed iOS / Android app: an in-app Twilio voice call where your voice is
+      processed by a Sanas model in real time, with mid-call model on/off and live switching.
+      No chatbot, RAG, or uploads.</p>
+    <div class="pill-row" style="margin-top:14px">
+      <button class="ctl on" data-state="idle">Idle</button>
+      <button class="ctl" data-state="connecting">Connecting</button>
+      <button class="ctl" data-state="incall">On call</button>
+      <span style="width:14px"></span>
+      <button class="ctl" id="themeBtn">◐ Theme</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen" id="screen" data-theme="light">
+        <div class="statusbar"><span>9:41</span><span>5G &nbsp; 100%</span></div>
+        <div class="ahead">
+          <div class="brand"><span class="dot"></span> Sanas · Live Call</div>
+          <div class="tbtn" id="screenTheme">☾</div>
+        </div>
+        <div class="app">
+          <div class="lbl">Sanas model</div>
+          <div class="chips">
+            <div class="chip sel">Agentic NC — Telephony</div>
+            <div class="chip">Speech Enhancement</div>
+            <div class="chip">NC — Voice Isolation</div>
+          </div>
+
+          <div class="callrow" id="callrow">
+            <div class="callbtn" id="callbtn">Call</div>
+            <div class="hang dim" id="hang">Hang-up</div>
+            <div class="timer" id="timer">00:00</div>
+          </div>
+
+          <div class="lbl">Mid-call</div>
+          <div class="togrow" id="togrow">
+            <div class="tog dim" id="mon">Model on</div>
+            <div class="tog dim" id="moff">Model off</div>
+          </div>
+
+          <div class="status" id="status">Tap Call to hear your voice processed by Sanas in real time.</div>
+          <div class="foot">Switching the model or toggling it off takes effect mid-call. Your voice is
+            processed live by the selected Sanas model.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="label-state" id="caption">State: Idle · Light — use the buttons above to preview states &amp; theme.</div>
+</div>
+
+<script>
+  (function(){
+    var screen=document.getElementById('screen');
+    var callbtn=document.getElementById('callbtn'), hang=document.getElementById('hang');
+    var timer=document.getElementById('timer'), mon=document.getElementById('mon'), moff=document.getElementById('moff');
+    var status=document.getElementById('status'), caption=document.getElementById('caption');
+    var togrow=document.getElementById('togrow');
+    var state='idle', tick=null, secs=0, modelOn=true;
+
+    function fmt(s){return String((s/60|0)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+    function stopTick(){ if(tick){clearInterval(tick);tick=null;} }
+    function setModelTog(){
+      mon.className='tog'+(modelOn?' green':'');
+      moff.className='tog'+(!modelOn?' darkon':'');
+      if(state!=='incall'){mon.className+=' dim';moff.className+=' dim';}
+    }
+    function render(){
+      // call button
+      callbtn.className='callbtn'+(state==='incall'?' green':'');
+      callbtn.innerHTML = state==='connecting'?'<span class="spin"></span>'
+                        : state==='incall'?'On call':'Call';
+      callbtn.classList.toggle('dim', state==='connecting');
+      hang.className='hang'+((state==='incall'||state==='connecting')?'':' dim');
+      timer.className='timer'+(state==='incall'?' on':'');
+      setModelTog();
+      // timer
+      stopTick(); secs=0; timer.textContent='00:00';
+      if(state==='incall'){ var t0=Date.now()-14000; secs=14; timer.textContent=fmt(14);
+        tick=setInterval(function(){ timer.textContent=fmt(Math.floor((Date.now()-t0)/1000)); },500); }
+      // status
+      status.textContent = state==='connecting' ? 'Connecting…'
+        : state==='incall' ? 'On call — hearing yourself through Sanas. Toggle the model on/off or switch it live.'
+        : 'Tap Call to hear your voice processed by Sanas in real time.';
+      var theme = screen.getAttribute('data-theme');
+      caption.textContent='State: '+(state==='incall'?'On call':state==='connecting'?'Connecting':'Idle')
+        +' · '+(theme==='dark'?'Dark':'Light')+' — use the buttons above to preview states & theme.';
+    }
+    function setState(s){ state=s; modelOn=true;
+      document.querySelectorAll('.ctl[data-state]').forEach(function(b){ b.classList.toggle('on', b.dataset.state===s); });
+      render(); }
+    function toggleTheme(){
+      var d=screen.getAttribute('data-theme')==='dark';
+      screen.setAttribute('data-theme', d?'light':'dark');
+      document.getElementById('screenTheme').textContent = d?'☾':'☀';
+      render();
+    }
+    document.querySelectorAll('.ctl[data-state]').forEach(function(b){ b.onclick=function(){setState(b.dataset.state);}; });
+    document.getElementById('themeBtn').onclick=toggleTheme;
+    document.getElementById('screenTheme').onclick=toggleTheme;
+    // tappable in-screen controls for a more interactive feel
+    callbtn.onclick=function(){ if(state==='idle'){setState('connecting'); setTimeout(function(){setState('incall');},1200);} };
+    hang.onclick=function(){ if(state==='incall'||state==='connecting') setState('idle'); };
+    mon.onclick=function(){ if(state==='incall'){modelOn=true;setModelTog();} };
+    moff.onclick=function(){ if(state==='incall'){modelOn=false;setModelTog();} };
+    render();
+  })();
+</script>
